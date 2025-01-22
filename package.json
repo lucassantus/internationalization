@@ -6,7 +6,11 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "typecheck": "tsc --noEmit",
+    "biome:format": "biome format --write ./src",
+    "biome:check": "biome check --write ./src",
+    "biome:lint": "biome lint --write ./src",
+    "shadcn": "pnpm dlx shadcn@latest add"
   },
   "dependencies": {
     "react": "^19.0.0",
