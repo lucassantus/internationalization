@@ -2,30 +2,24 @@ import { NextResponse } from "next/server";
 import { DEFAULT_LOCALE } from "./constants/globals";
 import { Locale } from "./types/locale";
 
-const locales: Locale[] = ["en-US", "pt-BR"]; 
+export const locales: Locale[] = ["en-US", "pt-BR"];
 
 function getPreferredLocale(request: Request): string {
   const acceptLanguage = request.headers.get("accept-language");
 
-  if (!acceptLanguage) return locales[0];
+  if (!acceptLanguage) return DEFAULT_LOCALE;
 
-  const preferredLocales = acceptLanguage
-    .split(",")
-    .map((lang) => lang.split(";")[0].trim()) as Locale[]
+  const preferredLocales = acceptLanguage.split(",").map((language) => language.split(";")[0].trim()) as Locale[];
 
-  return (
-    preferredLocales.find((locale) => locales.includes(locale)) || DEFAULT_LOCALE
-  );
+  return preferredLocales.find((locale) => locales.includes(locale)) || DEFAULT_LOCALE;
 }
 
 export function middleware(request: Request) {
   const { pathname } = new URL(request.url);
 
-  const pathnameHasLocale = locales.some(
-    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
-  );
+  const pathHasLocale = locales.some((locale) => pathname.includes(locale));
 
-  if (pathnameHasLocale) {
+  if (pathHasLocale) {
     return NextResponse.next();
   }
 
@@ -36,7 +30,5 @@ export function middleware(request: Request) {
 }
 
 export const config = {
-  matcher: [
-    "/((?!_next|favicon.ico).*)",
-  ],
+  matcher: ["/((?!_next|favicon.ico).*)"],
 };
