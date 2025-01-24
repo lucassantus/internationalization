@@ -7,11 +7,6 @@
     "quickfix.biome": "explicit"
   },
 
-  // PRISMA
-  "[prisma]": {
-    "editor.defaultFormatter": "Prisma.prisma"
-  },
-
   // TAILWINDCSS INTELLISENSE
   "tailwindCSS.experimental.classRegex": [
     ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
