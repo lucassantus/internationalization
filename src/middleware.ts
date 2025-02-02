@@ -1,34 +1,40 @@
 import { NextResponse } from "next/server";
-import { DEFAULT_LOCALE } from "./constants/globals";
-import { Locale } from "./types/locale";
-
-export const locales: Locale[] = ["en-US", "pt-BR"];
-
-function getPreferredLocale(request: Request): string {
-  const acceptLanguage = request.headers.get("accept-language");
-
-  if (!acceptLanguage) return DEFAULT_LOCALE;
-
-  const preferredLocales = acceptLanguage.split(",").map((language) => language.split(";")[0].trim()) as Locale[];
-
-  return preferredLocales.find((locale) => locales.includes(locale)) || DEFAULT_LOCALE;
-}
+import { KEY_LOCALE, locales } from "./constants/globals";
+import { getPreferredLocale } from "./utils/get-preferred-locale";
 
 export function middleware(request: Request) {
   const { pathname } = new URL(request.url);
 
-  const pathHasLocale = locales.some((locale) => pathname.includes(locale));
+  const locale = locales.find((locale) => pathname.includes(locale));
 
-  if (pathHasLocale) {
-    return NextResponse.next();
+  if (locale) {
+    const response = NextResponse.next();
+
+    response.cookies.set(KEY_LOCALE, String(locale));
+
+    return response;
   }
 
-  const locale = getPreferredLocale(request);
+  const preferredLocale = getPreferredLocale(request);
 
-  const newUrl = new URL(`/${locale}${pathname}`, request.url);
-  return NextResponse.redirect(newUrl);
+  const redirectUrl = new URL(`/${preferredLocale}${pathname}`, request.url);
+
+  const response = NextResponse.redirect(redirectUrl);
+
+  response.cookies.set(KEY_LOCALE, String(preferredLocale));
+
+  return response;
 }
 
 export const config = {
-  matcher: ["/((?!_next|favicon.ico).*)"],
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico, sitemap.xml, robots.txt (metadata files)
+     */
+    "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
+  ],
 };
