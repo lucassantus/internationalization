@@ -31,8 +31,9 @@ export function ToggleLanguage({}: ToggleLanguageProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="ml-auto">
-          {languages[locale]} <ChevronDownIcon className="ml-2 h-4 w-4" />
+        <Button variant="outline" className="ml-auto h-8 px-3">
+          {languages[locale]}
+          <ChevronDownIcon className="size-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

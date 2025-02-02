@@ -8,7 +8,12 @@ export function ToggleMode({}: ToggleModeProps) {
   const { theme, setTheme } = useTheme();
 
   return (
-    <Button variant="ghost" size="icon" onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
+    <Button
+      variant="ghost"
+      size="icon"
+      className="size-8"
+      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+    >
       <SunIcon className="dark:-rotate-90 size-5 rotate-0 scale-100 transition-all dark:scale-0" />
       <MoonIcon className="absolute size-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
       <span className="sr-only">Toggle theme</span>

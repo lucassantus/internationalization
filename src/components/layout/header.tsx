@@ -1,20 +1,38 @@
 "use client";
 
+import { application } from "@/constants/application";
+import { Locale } from "@/types/locale";
+import { EarthIcon, GithubIcon } from "lucide-react";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 import { ToggleLanguage } from "../toggle-language";
 import { ToggleMode } from "../toggle-mode";
+import { Button } from "../ui/button";
 
 export default function Header() {
+  const { locale } = useParams<{ locale: Locale }>();
+
+  if (!locale) return null;
+
   return (
-    <header className="border-b">
-      <div className="container mx-auto flex items-center justify-between p-3">
-        <div className="flex items-center">
-          <span className="ml-2 font-bold text-xl">Internationalization</span>
-        </div>
-        <div className="flex items-center space-x-4">
+    <header className="sticky top-0 z-50 w-full border-border/40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container mx-auto flex h-14 items-center px-6">
+        <Link href={`/${locale}/dashboard`} className="mr-2 flex items-center md:mr-6 md:space-x-2">
+          <EarthIcon className="size-4" aria-hidden="true" />
+          <span className="hidden font-bold md:inline-block">{application.name}</span>
+        </Link>
+
+        <nav className="flex flex-1 items-center gap-2 md:justify-end">
           <ToggleLanguage />
 
+          <Button variant="ghost" size="icon" className="size-8" asChild>
+            <Link aria-label="GitHub repo" href={application.links.github} target="_blank" rel="noopener noreferrer">
+              <GithubIcon className="size-4" aria-hidden="true" />
+            </Link>
+          </Button>
+
           <ToggleMode />
-        </div>
+        </nav>
       </div>
     </header>
   );
