@@ -2,15 +2,16 @@
 
 import { DEFAULT_LOCALE } from "@/constants/globals";
 import { Translations, translations } from "@/locales";
-import { Locale } from "@/types/locale";
+import { Locale, TranslationResponse } from "@/types/locale";
 import { useParams } from "next/navigation";
 
-interface TranslationsResponse<T extends keyof Translations> {
-  locale: Locale;
-  translate: Translations[T][Locale];
-}
-
-export function useTranslations<T extends keyof Translations>(module: T): TranslationsResponse<T> {
+/**
+ * Retrieves translations for a specific module based on the current locale.
+ *
+ * @param {T} module - The translation module key.
+ * @returns {TranslationResponse<T>} An object containing the current locale and the corresponding translations.
+ */
+export function useTranslations<T extends keyof Translations>(module: T): TranslationResponse<T> {
   const { locale } = useParams<{ locale: Locale }>();
 
   const modules = translations[module];
