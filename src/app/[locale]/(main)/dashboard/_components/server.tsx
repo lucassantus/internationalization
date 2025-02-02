@@ -1,10 +1,10 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getTranslations } from "@/utils/get-translations";
 
-interface ServerSideTranslationProps {}
+interface ServerTranslationsProps {}
 
-export async function ServerSideTranslation({}: ServerSideTranslationProps) {
-  const translate = await getTranslations("dashboard");
+export async function ServerTranslations({}: ServerTranslationsProps) {
+  const { translate } = await getTranslations("dashboard");
 
   return (
     <Card>

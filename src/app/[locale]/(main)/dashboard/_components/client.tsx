@@ -3,9 +3,9 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useTranslations } from "@/hooks/use-translations";
 
-interface ClientSideTranslationsProps {}
+interface ClientTranslationsProps {}
 
-export function ClientSideTranslations({}: ClientSideTranslationsProps) {
+export function ClientTranslations({}: ClientTranslationsProps) {
   const { translate } = useTranslations("dashboard");
 
   return (
