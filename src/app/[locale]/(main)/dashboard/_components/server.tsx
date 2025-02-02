@@ -1,17 +1,15 @@
-"use client";
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { useTranslations } from "@/hooks/use-translations";
+import { getTranslations } from "@/utils/get-translations";
 
-interface ClientSideTranslationsProps {}
+interface ServerSideTranslationProps {}
 
-export function ClientSideTranslations({}: ClientSideTranslationsProps) {
-  const { translate } = useTranslations("dashboard");
+export async function ServerSideTranslation({}: ServerSideTranslationProps) {
+  const translate = await getTranslations("dashboard");
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Client Side</CardTitle>
+        <CardTitle>Server Side</CardTitle>
         <CardDescription>{translate.dashboard.description}</CardDescription>
       </CardHeader>
       <CardContent>{translate.dashboard.content}</CardContent>

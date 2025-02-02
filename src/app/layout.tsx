@@ -1,3 +1,4 @@
+import { DEFAULT_LOCALE } from "@/constants/globals";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -25,7 +26,7 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={DEFAULT_LOCALE} suppressHydrationWarning>
       <body className={cn("antialiased", geistSans.variable, geistMono.variable)} suppressHydrationWarning>
         <Providers>{children}</Providers>
       </body>
