@@ -1,4 +1,4 @@
-import { DEFAULT_LOCALE, locales } from "@/constants/globals";
+import { DEFAULT_LOCALE, LOCALES } from "@/constants/globals";
 import { Locale } from "@/types/locale";
 
 /**
@@ -14,7 +14,7 @@ export function getPreferredLocale(request: Request): Locale {
 
   const preferredLocales = acceptLanguage.split(",").map((language) => language.split(";")[0].trim()) as Locale[];
 
-  const preferredLocale: Locale = preferredLocales.find((locale) => locales.includes(locale)) || DEFAULT_LOCALE;
+  const preferredLocale: Locale = preferredLocales.find((locale) => LOCALES.includes(locale)) || DEFAULT_LOCALE;
 
   return preferredLocale;
 }
