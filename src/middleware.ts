@@ -1,27 +1,32 @@
 import { NextResponse } from "next/server";
-import { KEY_LOCALE, locales } from "./constants/globals";
+import { KEY_LOCALE_COOKIE, LOCALES, SIGNED_KEY_LOCALE } from "./constants/globals";
+import { Locale } from "./types/locale";
 import { getPreferredLocale } from "./utils/get-preferred-locale";
 
-export function middleware(request: Request) {
-  const { pathname } = new URL(request.url);
+export async function middleware(request: Request) {
+  const url = new URL(request.url)
 
-  const locale = locales.find((locale) => pathname.includes(locale));
+  const locale = url.searchParams.get(KEY_LOCALE_COOKIE) as Locale
 
-  if (locale) {
-    const response = NextResponse.next();
+  if(locale) {
+    const localeIsValid = LOCALES.includes(locale)
 
-    response.cookies.set(KEY_LOCALE, String(locale));
+    if(localeIsValid) {
+      const response = NextResponse.next();
 
-    return response;
+      response.cookies.set(SIGNED_KEY_LOCALE, String(locale));
+
+      return response;
+    }
   }
 
   const preferredLocale = getPreferredLocale(request);
 
-  const redirectUrl = new URL(`/${preferredLocale}${pathname}`, request.url);
+  url.searchParams.set(KEY_LOCALE_COOKIE, preferredLocale)
 
-  const response = NextResponse.redirect(redirectUrl);
+  const response = NextResponse.redirect(url);
 
-  response.cookies.set(KEY_LOCALE, String(preferredLocale));
+  response.cookies.set(SIGNED_KEY_LOCALE, String(preferredLocale));
 
   return response;
 }
