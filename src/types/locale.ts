@@ -1,6 +1,9 @@
 import { Translations } from "@/locales";
 
-export type Locale = "pt-BR" | "en-US";
+export enum Locale {
+  EN = "en-US",
+  PT = "pt-BR"
+}
 
 export interface TranslationResponse<T extends keyof Translations> {
   locale: Locale;
