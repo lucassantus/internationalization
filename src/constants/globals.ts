@@ -1,11 +1,14 @@
 import { Locale } from "@/types/locale";
 import { getProjectKey } from "@/utils/get-project-key";
 
-// Default Values
-export const DEFAULT_LOCALE: Locale = "pt-BR";
+// DEFAULT VALUES
+export const DEFAULT_LOCALE: Locale = Locale.PT
 
-// Keys
-export const KEY_LOCALE = getProjectKey("locale");
+// SIGNED KEYS
+export const SIGNED_KEY_LOCALE = getProjectKey("locale");
 
-// Constants
-export const locales: Locale[] = ["en-US", "pt-BR"];
+// KEYS
+export const KEY_LOCALE_COOKIE = "locale"
+
+// CONSTANTS
+export const LOCALES = Object.values(Locale)

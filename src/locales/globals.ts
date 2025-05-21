@@ -9,14 +9,15 @@ export interface GlobalTranslations {
 }
 
 export const globalTranslations: Record<Locale, GlobalTranslations> = {
-  "pt-BR": {
+  [Locale.PT]: {
     portuguese: "Português",
     english: "Inglês",
     pages: {
       dashboard: "Home Page",
     },
   },
-  "en-US": {
+
+  [Locale.EN]: {
     portuguese: "Portuguese",
     english: "English",
     pages: {

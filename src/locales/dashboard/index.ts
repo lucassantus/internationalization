@@ -11,6 +11,6 @@ export interface DashboardTranslations {
 }
 
 export const dashboardTranslations: Record<Locale, DashboardTranslations> = {
-  "pt-BR": dashboardPtTranslations,
-  "en-US": dashboardEnTranslations,
+  [Locale.PT]: dashboardPtTranslations,
+  [Locale.EN]: dashboardEnTranslations,
 };
